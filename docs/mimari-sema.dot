@@ -1,0 +1,41 @@
+digraph Mimari {
+  rankdir=TB; bgcolor="white"; fontname="Helvetica"; nodesep=0.35; ranksep=0.45;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12, color="#8a8f9c", fillcolor="white", margin="0.18,0.08"];
+  edge [color="#5d6677", fontname="Helvetica", fontsize=10, arrowsize=0.7];
+  label="Belgematik - Katmanli Mimari Semasi"; labelloc=t; fontsize=18;
+
+  kullanici [label="Kullanici\n(Tarayici / Telefon)", shape=ellipse, fillcolor="#f1e9f8", color="#5b2a86"];
+
+  subgraph cluster_sunum { label="1) SUNUM KATMANI  -  app/presentation/"; style="rounded,filled"; fillcolor="#f4eefa"; color="#5b2a86"; fontsize=13;
+    routes [label="routes.py\n(URL'ler / Blueprint)"];
+    templates [label="templates/\n(HTML - Jinja2)"];
+    static [label="static/\n(CSS, JS)"];
+  }
+  subgraph cluster_is { label="2) IS KATMANI  -  app/services/"; style="rounded,filled"; fillcolor="#eef3fb"; color="#2f5ea8"; fontsize=13;
+    ocr [label="ocr/\nMetin okuma"];
+    extraction [label="extraction/\nAlan esleme"];
+    validation [label="validation/\nDogrulama"];
+    export [label="export/\nExcel - CSV - JSON"];
+    ocr -> extraction -> validation -> export;
+  }
+  subgraph cluster_veri { label="3) VERI KATMANI  -  app/data/"; style="rounded,filled"; fillcolor="#edf7f1"; color="#1f8a5b"; fontsize=13;
+    models [label="models.py\n(Tablo tanimlari)"];
+    repos [label="repositories/\n(CRUD fonksiyonlari)"];
+    repos -> models;
+  }
+  subgraph cluster_dis { label="DIS SISTEMLER"; style="rounded,dashed"; color="#8a8f9c"; fontsize=13;
+    pg [label="PostgreSQL\nVeritabani", shape=cylinder, fillcolor="#f6f7fb"];
+    tess [label="Tesseract OCR\n(ucretsiz mod)", fillcolor="#f6f7fb"];
+    llm [label="Yapay Zeka API\n(pro mod)", fillcolor="#f6f7fb"];
+    disk [label="uploads/\n(Belge dosyalari)", shape=folder, fillcolor="#f6f7fb"];
+  }
+
+  kullanici -> routes [label=" HTTP istegi"];
+  routes -> templates [style=dashed, arrowhead=none];
+  templates -> static [style=dashed, arrowhead=none];
+  routes -> ocr [label=" is cagrisi", lhead=cluster_is];
+  validation -> repos [label=" kaydet / oku"];
+  models -> pg [label=" SQL"];
+  ocr -> tess; ocr -> llm;
+  routes -> disk [label=" dosya kaydet", style=dashed];
+}

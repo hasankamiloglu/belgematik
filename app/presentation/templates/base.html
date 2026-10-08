@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Belgematik{% endblock %}</title>
+    <!-- url_for('static', ...) -> Flask'ın static klasöründeki dosyanın doğru adresini üretir -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {# base.html -> tüm sayfaların ortak iskeleti (şablon kalıtımı / template inheritance).
+       Diğer sayfalar "extends base.html" komutuyla bunu kullanır ve sadece
+       "content" bloğunu doldurur. Böylece menü ve alt bilgi her sayfada tekrar yazılmaz. #}
+    <header class="topbar">
+        <a class="brand" href="{{ url_for('main.index') }}">
+            <span class="brand-mark">B</span> Belgematik
+        </a>
+        <span class="tag">v0.1 · iskelet</span>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        Görüntüden Yapılandırılmış Veri Çıkarma · Bilgisayar Uygulamaları I Projesi
+    </footer>
+</body>
+</html>

@@ -1,0 +1,30 @@
+# .gitignore -> Git'in TAKİP ETMEYECEĞİ (GitHub'a yüklemeyeceği) dosyalar
+
+# --- Gizli bilgiler (EN ÖNEMLİSİ!) ---
+.env
+*.pem
+*.key
+
+# --- Python'un otomatik ürettiği dosyalar ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# --- Sanal ortam (herkes kendi bilgisayarında kurar) ---
+venv/
+.venv/
+env/
+
+# --- Kullanıcıların yüklediği belgeler (kişisel veri içerir) ---
+uploads/*
+!uploads/.gitkeep
+
+# --- Editör ve işletim sistemi dosyaları ---
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# --- Log ve geçici dosyalar ---
+*.log
+instance/

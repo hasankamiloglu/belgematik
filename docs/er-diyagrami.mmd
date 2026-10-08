@@ -1,0 +1,71 @@
+erDiagram
+    KULLANICILAR ||--|| ABONELIKLER : "sahiptir (1-1)"
+    KULLANICILAR ||--o{ BELGELER : "yukler (1-N)"
+    KULLANICILAR |o--o{ SEMALAR : "olusturur (1-N)"
+    BELGELER ||--o{ CIKARIM_KAYITLARI : "islenir (1-N)"
+    SEMALAR ||--o{ CIKARIM_KAYITLARI : "uygulanir (1-N)"
+    SEMALAR ||--|{ SEMA_ALANLARI : "icerir (1-N)"
+    CIKARIM_KAYITLARI ||--o{ CIKARIM_DEGERLERI : "uretir"
+    SEMA_ALANLARI ||--o{ CIKARIM_DEGERLERI : "doldurulur"
+
+    KULLANICILAR {
+        int id PK
+        string ad_soyad
+        string email UK
+        string sifre_hash
+        string rol "bireysel / kobi / muhasebeci"
+        datetime olusturma_tarihi
+    }
+    ABONELIKLER {
+        int id PK
+        int kullanici_id FK,UK
+        string paket "ucretsiz / pro"
+        int aylik_kredi
+        int kalan_kredi
+        date baslangic
+        date bitis
+    }
+    BELGELER {
+        int id PK
+        int kullanici_id FK
+        string dosya_adi
+        string dosya_yolu
+        string dosya_turu "png / jpg / pdf"
+        int boyut_kb
+        string durum "yuklendi / islendi / hatali"
+        datetime yuklenme_tarihi
+    }
+    SEMALAR {
+        int id PK
+        int kullanici_id FK "NULL = sistem semasi"
+        string ad "fis / fatura / kartvizit"
+        string aciklama
+        bool sistem_semasi_mi
+    }
+    SEMA_ALANLARI {
+        int id PK
+        int sema_id FK
+        string alan_adi "toplam_tutar, kdv..."
+        string veri_tipi "metin / tarih / para / sayi"
+        bool zorunlu_mu
+        string dogrulama_kurali "regex"
+    }
+    CIKARIM_KAYITLARI {
+        int id PK
+        int belge_id FK
+        int sema_id FK
+        string ocr_motoru "tesseract / yapay_zeka"
+        text ham_metin
+        float guven_skoru
+        string durum "bekliyor / dogrulandi / duzeltildi"
+        datetime olusturma_tarihi
+    }
+    CIKARIM_DEGERLERI {
+        int id PK
+        int cikarim_id FK
+        int alan_id FK
+        string deger
+        float guven_skoru
+        bool gecerli_mi
+        bool duzeltildi_mi
+    }
