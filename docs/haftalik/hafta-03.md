@@ -4,7 +4,7 @@
 
 ## Yapılan teknik çalışmalar
 
-- [x] Teknoloji yığını seçildi ve kuruldu: Python 3.12, VS Code, Git, Flask, Tesseract OCR, PostgreSQL
+- [x] Teknoloji yığını seçildi: Python, Flask, PostgreSQL, Tesseract OCR, Git/GitHub. Kurulanlar: Python 3.14, VS Code, Git, Flask. PostgreSQL ve Tesseract Hafta 4'te kurulacak.
 - [x] Boş proje iskeleti ve **3 katmanlı** klasör yapısı oluşturuldu (sunum / iş / veri)
 - [x] Application Factory deseni ile çalışan Flask uygulaması (`run.py`, `app/__init__.py`)
 - [x] Ortama göre ayar yönetimi (`config.py`: development / testing / production)
