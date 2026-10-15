@@ -7,7 +7,7 @@
 
 ## 2. GitHub'da boş depo oluştur
 1. Sağ üstteki **+** → **New repository**
-2. Repository name: `belgematik`
+2. Repository name: `belgematik-backend`
 3. Description: `Fiş, fatura ve kartvizit fotoğraflarından yapılandırılmış veri çıkaran web uygulaması`
 4. **Public** seçin (hoca erişebilsin).
 5. "Add a README", ".gitignore", "license" seçeneklerini **İŞARETLEMEYİN** (bizde zaten var).
@@ -21,14 +21,14 @@ git branch -M main                        # ana dal adını "main" yap
 git add .                                 # tüm dosyaları hazırla (.gitignore'dakiler hariç)
 git status                                # KONTROL: .env ve venv listede OLMAMALI!
 git commit -m "Hafta 3: proje iskeleti, katmanli mimari, ER diyagrami"
-git remote add origin https://github.com/hasankamiloglu/belgematik.git
+git remote add origin https://github.com/hasankamiloglu/belgematik-backend.git
 git push -u origin main
 ```
 
 İlk `push`ta tarayıcı açılıp GitHub girişi isteyecek; giriş yapın ve izin verin.
 
 ## 4. Kontrol
-- github.com/hasankamiloglu/belgematik sayfasında README ve diyagramlar görünmeli.
+- github.com/hasankamiloglu/belgematik-backend sayfasında README ve diyagramlar görünmeli.
 - `.env` dosyası **görünmemeli**.
 
 ## Her hafta sonu

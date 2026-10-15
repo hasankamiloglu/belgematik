@@ -20,7 +20,7 @@
 
 | Çıktı | Konum |
 |---|---|
-| GitHub deposu (README + .gitignore) | github.com/hasankamiloglu/belgematik |
+| GitHub deposu (README + .gitignore) | github.com/hasankamiloglu/belgematik-backend |
 | ER diyagramı | `docs/er-diyagrami.png`, `docs/er-diyagrami.mmd` |
 | Veri modeli açıklaması | `docs/veri-modeli.md` |
 | Mimari şema | `docs/mimari-sema.png` |
@@ -28,7 +28,7 @@
 ## Gösterilecek ilerleme (demo sırası)
 
 1. GitHub deposunu aç → README, diyagramlar, düzenli klasör yapısı
-2. VS Code'da klasör yapısını göster → `presentation`, `services`, `data`
+2. VS Code’da klasör yapısını göster → `api`, `services`, `data`
 3. `python run.py` → http://127.0.0.1:5000 ana sayfa
 4. http://127.0.0.1:5000/saglik → `{"durum": "calisiyor"}`
 5. `pytest` → `2 passed`
@@ -45,3 +45,21 @@ için varlık önerisi almak amacıyla kullanıldı. Nihai kararlar (abonelik ta
 - Projeye özgü varlıklar: `semalar` + `sema_alanlari` ile kod değiştirmeden yeni belge türü ekleyebilme
 - `abonelikler` tablosu: ücretsiz / pro paket ayrımı (iş modelinin veri tarafı)
 - Klasör/katman yapısının gerekçesi: her katman yalnızca altındakiyle konuşur
+
+## Ek: Hoca geri bildirimi – Frontend ve backend ayrı depolar
+
+Hocanın isteği üzerine proje iki ayrı depoya bölündü:
+
+| Depo | Teknoloji | Görev |
+|---|---|---|
+| `belgematik-backend` | Python + Flask | JSON döndüren API, iş kuralları, veritabanı |
+| `belgematik-frontend` | React + Vite | Kullanıcı arayüzü; veriyi API'den `fetch` ile alır |
+
+Yapılan değişiklikler:
+- [x] Eski depo `belgematik` → `belgematik-backend` olarak yeniden adlandırıldı (commit geçmişi korundu)
+- [x] Backend'deki HTML şablonları kaldırıldı; sunum katmanı `app/presentation/` → `app/api/` oldu
+- [x] API uçları: `GET /api/`, `GET /api/saglik`, `GET /api/moduller`
+- [x] CORS eklendi: sadece izin verilen frontend adresleri (`localhost:5173`) API'ye erişebilir
+- [x] Testler 4'e çıkarıldı (sağlık, modüller, izinli CORS, izinsiz CORS)
+- [x] `belgematik-frontend` deposu oluşturuldu: React bileşenleri, API istemcisi (`api/client.js`)
+- [x] Mimari şema iki depolu yapıya göre güncellendi

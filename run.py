@@ -1,9 +1,10 @@
 """
-run.py - Uygulamanın giriş noktası (başlatma dosyası).
+run.py - Backend API'nin giriş noktası (başlatma dosyası).
 
 Çalıştırmak için (sanal ortam aktifken):
     python run.py
-Sonra tarayıcıdan: http://127.0.0.1:5000
+Kontrol için tarayıcıdan: http://127.0.0.1:5000/api/saglik
+Ekranlar için frontend ayrıca çalıştırılır (belgematik-frontend deposu).
 """
 
 from app import create_app

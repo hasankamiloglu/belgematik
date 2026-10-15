@@ -1,19 +1,22 @@
 """
-app paketi - Uygulamanın kendisi.
+app paketi - Belgematik BACKEND uygulaması.
+
+Bu depo SADECE backend'dir: HTML sayfa göstermez, JSON veri döndüren bir API'dir.
+Kullanıcının gördüğü ekranlar ayrı depodadır: belgematik-frontend (React).
 
 KATMANLI MİMARİ (3 katman):
-    app/presentation/  -> SUNUM katmanı : Kullanıcının gördüğü sayfalar ve URL'ler
-    app/services/      -> İŞ katmanı    : OCR, alan eşleme, doğrulama, dışa aktarma
-    app/data/          -> VERİ katmanı  : Veritabanı modelleri ve veri erişimi
+    app/api/       -> SUNUM katmanı : API uçları (URL'ler), JSON cevaplar
+    app/services/  -> İŞ katmanı    : OCR, alan eşleme, doğrulama, dışa aktarma
+    app/data/      -> VERİ katmanı  : Veritabanı modelleri ve veri erişimi
 
 Kural: Her katman sadece BİR ALTINDAKİ katmanla konuşur.
-    Sunum -> İş -> Veri
-Sunum katmanı veritabanına DOĞRUDAN erişmez.
+    API -> İş -> Veri
+API katmanı veritabanına DOĞRUDAN erişmez.
 """
 
 import os
 
-from flask import Flask
+from flask import Flask, request
 
 from config import config_by_name
 
@@ -32,13 +35,7 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.getenv("FLASK_ENV", "development")
 
-    # template_folder ve static_folder -> HTML ve CSS dosyaları sunum katmanında
-    # durduğu için Flask'a yerlerini açıkça söylüyoruz.
-    app = Flask(
-        __name__,
-        template_folder="presentation/templates",
-        static_folder="presentation/static",
-    )
+    app = Flask(__name__)
 
     # Seçilen ortamın ayarlarını uygulamaya yükle.
     app.config.from_object(config_by_name[config_name])
@@ -46,10 +43,32 @@ def create_app(config_name=None):
     # uploads klasörü yoksa oluştur (exist_ok=True -> varsa hata verme).
     os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
-    # Blueprint -> URL'leri modüllere bölmemizi sağlayan Flask yapısı.
-    # Sunum katmanındaki sayfaları uygulamaya kaydediyoruz.
-    from app.presentation.routes import main_bp
+    # JSON cevaplarda Türkçe karakterler (ş, ğ, ı) ş gibi kodlanmasın, düz yazılsın.
+    app.json.ensure_ascii = False
 
-    app.register_blueprint(main_bp)
+    # Blueprint -> URL'leri gruplara bölmemizi sağlayan Flask yapısı.
+    # url_prefix="/api" -> bu gruptaki tüm adreslerin başına /api eklenir.
+    #   Örnek: @api_bp.route("/saglik")  ==>  http://127.0.0.1:5000/api/saglik
+    from app.api.routes import api_bp
+
+    app.register_blueprint(api_bp, url_prefix="/api")
+
+    # ------------------------------------------------------------------
+    # CORS (Cross-Origin Resource Sharing / Kaynaklar Arası Paylaşım)
+    # ------------------------------------------------------------------
+    # Frontend (React) http://localhost:5173 adresinde, backend ise
+    # http://127.0.0.1:5000 adresinde çalışır. Adresler farklı olduğu için
+    # tarayıcı güvenlik nedeniyle isteği ENGELLER. Backend, cevabına
+    # "bu adrese izin veriyorum" başlığını ekleyerek engeli kaldırır.
+    # İzin verilen adresler config.py'deki CORS_ORIGINS listesindedir.
+    @app.after_request
+    def cors_basliklarini_ekle(response):
+        # after_request -> her cevap tarayıcıya gitmeden HEMEN ÖNCE çalışır.
+        origin = request.headers.get("Origin")
+        if origin in app.config["CORS_ORIGINS"]:
+            response.headers["Access-Control-Allow-Origin"] = origin
+            response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+        return response
 
     return app

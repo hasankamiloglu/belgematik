@@ -38,8 +38,8 @@ Sırayla yapın. Her programı kurduktan sonra açık olan terminalleri kapatıp
 4. Kurulumdan sonra pgAdmin'i açıp şifreyle bağlanabildiğinizi kontrol edin.
 
 ## 6. Projeyi çalıştırma
-1. Zip'i örneğin `C:\Projeler\belgematik` klasörüne çıkarın.
-2. VS Code → File → Open Folder → `belgematik` klasörünü açın.
+1. Zip'i örneğin `C:\Users\<ad>\Desktop\projeler\belgematik-backend` klasörüne çıkarın.
+2. VS Code → File → Open Folder → `belgematik-backend` klasörünü açın.
 3. VS Code içinde terminal açın (Ctrl + ö  veya  Terminal → New Terminal) ve sırayla:
 
 ```powershell
@@ -50,7 +50,7 @@ copy .env.example .env           # gizli ayar dosyasını oluştur
 python run.py                    # uygulamayı başlat
 ```
 
-4. Tarayıcıda açın: http://127.0.0.1:5000 ve http://127.0.0.1:5000/saglik
+4. Tarayıcıda açın: http://127.0.0.1:5000/api/saglik (ekranlar için frontend ayrıca `npm run dev` ile çalıştırılır)
 5. Durdurmak için terminalde **Ctrl + C**.
 6. Testler: `pytest` → `2 passed` yazmalı.
 
@@ -62,3 +62,8 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 Sonra "Y" deyip tekrar `venv\Scripts\activate` yazın.
 
 VS Code sağ altta Python yorumlayıcısı sorarsa `.\venv\Scripts\python.exe` seçin.
+
+## 7. Node.js ve frontend (React)
+1. https://nodejs.org adresinden **LTS** sürümünü indirip varsayılan ayarlarla kurun.
+2. Kontrol: `node --version` ve `npm --version`
+3. Frontend deposunun README'sindeki adımları izleyin: `npm install` → `npm run dev` → http://localhost:5173

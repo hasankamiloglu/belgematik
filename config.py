@@ -38,6 +38,16 @@ class Config:
     # Kabul edilen dosya uzantıları (fotoğraf ve PDF).
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "pdf"}
 
+    # CORS_ORIGINS -> Backend'e istek atmasına izin verilen frontend adresleri.
+    # React geliştirme sunucusu varsayılan olarak 5173 portunda çalışır.
+    # .env içinde virgülle ayırarak değiştirilebilir (canlıda frontend'in adresi yazılır).
+    CORS_ORIGINS = [
+        adres.strip()
+        for adres in os.getenv(
+            "CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173"
+        ).split(",")
+    ]
+
     DEBUG = False
     TESTING = False
 
