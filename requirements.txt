@@ -1,7 +1,7 @@
 # requirements.txt -> projenin ihtiyaç duyduğu Python kütüphaneleri.
 # Kurmak için:  pip install -r requirements.txt
-# Yeni kütüphaneler ilgili haftalarda eklenecek (veritabanı, OCR, Excel...).
 
 Flask>=3.0,<4.0          # Web çatısı (framework)
 python-dotenv>=1.0       # .env dosyasındaki gizli ayarları okur
+psycopg[binary]>=3.2     # PostgreSQL sürücüsü: Python'un veritabanıyla konuşmasını sağlar (Hafta 4)
 pytest>=8.0              # Otomatik testler

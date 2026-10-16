@@ -1,5 +1,17 @@
 """
-Repository (depo) deseni: Her tablo için veri erişim fonksiyonları burada olacak.
-Örnek (Hafta 4): BelgeRepository.ekle(), BelgeRepository.kullaniciya_gore_listele()
-İş katmanı SQL bilmez; sadece bu fonksiyonları çağırır.
+Repository (depo) deseni: Her tablo grubu için veri erişim (CRUD) fonksiyonları.
+
+    kullanici_repo.py -> kullanicilar + abonelikler
+    belge_repo.py     -> belgeler
+    cikarim_repo.py   -> cikarim_kayitlari + cikarim_degerleri (N-N ara tablo)
+
+CRUD = Create (ekle) / Read (oku) / Update (güncelle) / Delete (sil)
+
+Kurallar:
+  - SQL SADECE bu klasörde yazılır. İş katmanı (services) SQL bilmez,
+    sadece bu fonksiyonları çağırır.
+  - Her fonksiyon ilk parametre olarak bağlantıyı (conn) alır. Böylece
+    birden fazla fonksiyon AYNI transaction içinde çalıştırılabilir.
+  - Değerler SQL'e asla string birleştirerek eklenmez; %s yer tutucusu
+    kullanılır. Bu, SQL INJECTION saldırısını önler.
 """

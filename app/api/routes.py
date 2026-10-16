@@ -19,13 +19,13 @@ from flask import Blueprint, jsonify
 api_bp = Blueprint("api", __name__)
 
 # Uygulamanın sürüm numarası. Sağlık kontrolünde döndürülür.
-SURUM = "0.2.0"
+SURUM = "0.3.0"
 
 # Ana modüller listesi: frontend bunu ana sayfada yol haritası olarak gösterir.
 # durum -> "hazir" (tamamlandı) veya "planli" (ileriki haftalarda)
 MODULLER = [
     {"ad": "Proje iskeleti ve mimari", "hafta": 3, "durum": "hazir"},
-    {"ad": "Veritabanı ve veri erişim katmanı", "hafta": 4, "durum": "planli"},
+    {"ad": "Veritabanı ve veri erişim katmanı", "hafta": 4, "durum": "hazir"},
     {"ad": "Fotoğraf yükleme", "hafta": 5, "durum": "planli"},
     {"ad": "OCR / metin çıkarma", "hafta": 6, "durum": "planli"},
     {"ad": "Alan eşleme ve doğrulama", "hafta": 7, "durum": "planli"},

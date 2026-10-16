@@ -32,8 +32,8 @@ digraph Mimari {
     }
     subgraph cluster_veri {
       label="3) VERI katmani - app/data/"; style="rounded,filled"; fillcolor="#edf7f1"; color="#1f8a5b";
-      repos [label="repositories/\n(CRUD)"];
-      models [label="models.py\n(tablolar)"];
+      repos [label="repositories/\n(CRUD - saf SQL)"];
+      models [label="db.py + migrate.py\n(baglanti, db/migrations/*.sql)"];
       repos -> models;
     }
   }
