@@ -53,6 +53,18 @@ def create_app(config_name=None):
 
     app.register_blueprint(api_bp, url_prefix="/api")
 
+    @app.route("/")
+    def ana_sayfa():
+        """
+        Backend'in ana adresi. Sayfa göstermez; nereye bakılacağını söyler.
+        Ekranlar React frontend'dedir: http://localhost:5173
+        """
+        return {
+            "mesaj": "Belgematik backend API çalışıyor. Ekranlar için frontend'i açın.",
+            "frontend": "http://localhost:5173",
+            "api": ["/api/saglik", "/api/moduller"],
+        }
+
     # ------------------------------------------------------------------
     # CORS (Cross-Origin Resource Sharing / Kaynaklar Arası Paylaşım)
     # ------------------------------------------------------------------
